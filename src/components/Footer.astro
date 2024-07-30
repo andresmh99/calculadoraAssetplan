@@ -1,0 +1,27 @@
+---
+import GitHub from './icons/GitHub.astro';
+import LinkedIn from './icons/LinkedIn.astro';
+const year = new Date()
+---
+<footer class="grid justify-center items-center border-t border-slate-900/5 py-4 bg-white">
+    <div class="flex justify-center items-center text-gray-600 gap-3 p-2">
+        <a href="https://www.linkedin.com/in/andresmh99"  target="_blank" class="hover:text-gray-900">
+            <LinkedIn class="size-5"/>
+        </a>
+        |
+        <a href="https://github.com/andresmh99"  target="_blank" class="hover:text-gray-900">
+            <GitHub class="size-5"/>
+        </a>
+    </div>
+    <div class="text-sm text-gray-500">
+        <span> © </span>
+        <span>
+            {
+                year.getFullYear()
+            }
+        </span>
+        <span>
+            <a href="https://andreveloper.vercel.app" target="_blank" class="hover:underline">Desarrollado por José Martínez.</a>
+        </span>
+    </div>
+</footer>
