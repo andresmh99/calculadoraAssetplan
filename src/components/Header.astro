@@ -3,43 +3,42 @@ import type { IMenuHeader } from "../interfaces/IMenuHeader";
 import Tailwind from "./icons/Tailwind.astro";
 import MenuToggle from "./MenuToggle.astro";
 
-export const menu:IMenuHeader[] = [
-{
-        name: "Inicio",
-        link: "/"
-    },
-    {
-        name: "Agua Caliente",
-        link: "/agua-caliente"
-    },
-    {
-        name: "Salvoconducto",
-        link: "/salvoconducto"
-    },
-    {
-        name: "Terminación Anticipada",
-        link: "/descuentos"
-    },
-    {
-        name: "Pago Servicios",
-        link: "/pago-servicios"
-    }
-]
+export const menu: IMenuHeader[] = [
+  {
+    name: "Inicio",
+    link: "/",
+  },
+  {
+    name: "Agua Caliente",
+    link: "/agua-caliente",
+  },
+  {
+    name: "Salvoconducto",
+    link: "/salvoconducto",
+  },
+  {
+    name: "Terminación Anticipada",
+    link: "/descuentos",
+  },
+  {
+    name: "Pago Servicios",
+    link: "/pago-servicios",
+  },
+];
 ---
 
 <header class="bg-white">
-    <nav class="flex max-w-3xl m-auto justify-between items-center p-3">
-        <Tailwind class="size-10"/>
-        <ul class="hidden md:flex flex-grow justify-center items-center gap-2">
-            {
-                menu.map((item)=>(
-                    <li class="px-2 ">
-                        <a href={item.link}>{item.name}</a>
-                    </li>
-                ))
-            }
-        </ul>
-        <MenuToggle/>
-    </nav>
+  <nav class="flex max-w-3xl m-auto justify-between items-center p-3">
+    <Tailwind class="size-10" />
+    <ul class="hidden md:flex flex-grow justify-center items-center gap-2">
+      {
+        menu.map((item) => (
+          <li class="px-2 ">
+            <a href={item.link}>{item.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <MenuToggle />
+  </nav>
 </header>
-

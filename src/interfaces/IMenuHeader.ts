@@ -1,4 +1,4 @@
-export interface IMenuHeader  {
-    name: string;
-    link:string;
+export interface IMenuHeader {
+  name: string
+  link: string
 }
