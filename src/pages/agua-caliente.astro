@@ -1,5 +1,76 @@
 ---
+import CardHeader from "../components/CardHeader.astro";
+import { color } from "../components/ColorSwitcher.astro";
+import Cash from "../components/icons/Cash.astro";
+import Ruler from "../components/icons/Ruler.astro";
+import CardSection from "../components/layout/CardSection.astro";
 import Layout from "../layouts/Layout.astro";
+
+const title = "Cálculo Agua Caliente";
+const description =
+  "Herramienta para calcular montos de agua caliente facturada en UF.";
+
+const TAGS = {
+  UF: {
+    name: "UF",
+    class: `size-6 ${color}`,
+    icon: Ruler,
+  },
+  M3: {
+    name: "Metro Cubico",
+    class: `size-6 ${color}`,
+    icon: Cash,
+  },
+};
+
+const items = [
+  {
+    title: "Valor UF:",
+    description: "Valor actualizado con fecha:",
+    icon: {
+      name: "UF",
+      class: `size-6 ${color}`,
+      icon: Ruler,
+    },
+    link: "https://www.google.com/finance/quote/CLF-CLP?sa=X&ved=2ahUKEwi7mvq0k-OFAxXXH7kGHdyDCdoQmY0JegQIHhAp",
+  },
+  {
+    title: " Valor m3:",
+    description: "Cálculo a partir de valor contrato x precio UF",
+    icon: {
+      name: "Metro Cubico",
+      class: `size-6 ${color}`,
+      icon: Cash,
+    },
+  },
+];
 ---
 
-<Layout title="Welcome to Astro." />
+<Layout title="Welcome to Astro.">
+  <CardSection>
+    <CardHeader title={title} description={description}>
+      {
+        items.map((item) => (
+          <div class="sm:col-span-3">
+            <div class="group relative flex gap-x-6 rounded-lg p-4 bg-gray-50">
+              <div class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-white">
+                <item.icon.icon class={item.icon.class} />
+              </div>
+              <div>
+                <a
+                  href={item.link}
+                  target="_blank"
+                  class="font-semibold text-gray-900"
+                >
+                  {item.title} CLP
+                  <span class="absolute inset-0" />
+                  <p>{item.description}</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </CardHeader>
+  </CardSection>
+</Layout>
