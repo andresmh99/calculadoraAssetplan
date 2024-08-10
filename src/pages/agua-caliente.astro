@@ -5,10 +5,19 @@ import Cash from "../components/icons/Cash.astro";
 import Ruler from "../components/icons/Ruler.astro";
 import CardSection from "../components/layout/CardSection.astro";
 import Layout from "../layouts/Layout.astro";
+import { Response } from "../components/Api";
+import { date } from "astro/zod";
 
 const title = "Cálculo Agua Caliente";
 const description =
   "Herramienta para calcular montos de agua caliente facturada en UF.";
+
+const url =
+  "https://api.cmfchile.cl/api-sbifv3/recursos_api/uf?apikey=e3a430efb353c799c749b220ea019b770d74a4f8&formato=json";
+const UF = await fetch(url).then((res) => res.json());
+const UFvalue = parseFloat(UF.UFs[0].Valor);
+const fechaUF: Date = UF.UFs[0].Fecha ;;
+const m3Value = UFvalue * 0.2;
 
 const TAGS = {
   UF: {
@@ -26,12 +35,13 @@ const TAGS = {
 const items = [
   {
     title: "Valor UF:",
-    description: "Valor actualizado con fecha:",
+    description: `Valor actualizado con fecha: ${fechaUF}`,
     icon: {
       name: "UF",
       class: `size-6 ${color}`,
       icon: Ruler,
     },
+    value: UFvalue,
     link: "https://www.google.com/finance/quote/CLF-CLP?sa=X&ved=2ahUKEwi7mvq0k-OFAxXXH7kGHdyDCdoQmY0JegQIHhAp",
   },
   {
@@ -42,12 +52,14 @@ const items = [
       class: `size-6 ${color}`,
       icon: Cash,
     },
+    value: m3Value,
   },
 ];
 ---
 
 <Layout title="Welcome to Astro.">
   <CardSection>
+    <Response />
     <CardHeader title={title} description={description}>
       {
         items.map((item) => (
@@ -60,9 +72,9 @@ const items = [
                 <a
                   href={item.link}
                   target="_blank"
-                  class="font-semibold text-gray-900"
+                  class=" text-gray-900"
                 >
-                  {item.title} CLP
+                  <span class="font-semibold">{item.title} <strong class="font-bold text-indigo-600">{item.value} </strong> CLP</span>
                   <span class="absolute inset-0" />
                   <p>{item.description}</p>
                 </a>
