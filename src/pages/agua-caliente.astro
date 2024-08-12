@@ -6,7 +6,9 @@ import Ruler from "../components/icons/Ruler.astro";
 import CardSection from "../components/layout/CardSection.astro";
 import Layout from "../layouts/Layout.astro";
 import { Response } from "../components/Api";
-import { date } from "astro/zod";
+import InputElement from "../components/InputElement.astro";
+import InputSection from "../components/InputSection.astro";
+import dayjs from "dayjs";
 
 const title = "Cálculo Agua Caliente";
 const description =
@@ -15,9 +17,10 @@ const description =
 const url =
   "https://api.cmfchile.cl/api-sbifv3/recursos_api/uf?apikey=e3a430efb353c799c749b220ea019b770d74a4f8&formato=json";
 const UF = await fetch(url).then((res) => res.json());
-const UFvalue = parseFloat(UF.UFs[0].Valor);
-const fechaUF: Date = UF.UFs[0].Fecha ;;
-const m3Value = UFvalue * 0.2;
+const UFvalue = parseFloat(UF.UFs[0].Valor.replace(".", ""));
+const fechaUF = dayjs(UF.UFs[0].Fecha).format("DD/MM/YYYY");
+
+const m3Value: number = Math.round(UFvalue * 0.2);
 
 const TAGS = {
   UF: {
@@ -55,9 +58,40 @@ const items = [
     value: m3Value,
   },
 ];
+
+const inputsElements = [
+  {
+    title: "Precio Contrato:",
+    description: "Cantidad de UF pactadas en el Contrato",
+    icon: "$",
+    props: {
+      id: "ufContrato",
+      type: "number",
+      min: "0",
+    },
+  },
+  {
+    title: "Lectura Inicial:",
+    props: {
+      id: "lecturaInicial",
+      name: "lecturaInicial",
+      type: "number",
+      min: "0",
+    },
+  },
+  {
+    title: "Lectura Final:",
+    props: {
+      id: "lecturaFinal",
+      name: "lecturaFinal",
+      type: "number",
+      min: "0",
+    },
+  },
+];
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title={title}>
   <CardSection>
     <Response />
     <CardHeader title={title} description={description}>
@@ -69,12 +103,14 @@ const items = [
                 <item.icon.icon class={item.icon.class} />
               </div>
               <div>
-                <a
-                  href={item.link}
-                  target="_blank"
-                  class=" text-gray-900"
-                >
-                  <span class="font-semibold">{item.title} <strong class="font-bold text-indigo-600">{item.value} </strong> CLP</span>
+                <a href={item.link} target="_blank" class=" text-gray-900">
+                  <span class="font-semibold">
+                    {item.title}{" "}
+                    <strong class="font-bold text-indigo-600">
+                      {item.value}{" "}
+                    </strong>{" "}
+                    CLP
+                  </span>
                   <span class="absolute inset-0" />
                   <p>{item.description}</p>
                 </a>
@@ -84,5 +120,21 @@ const items = [
         ))
       }
     </CardHeader>
+
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      {
+        inputsElements.map((input) => (
+          <div class="sm:col-span-2">
+            <InputSection
+              title={input.title}
+              description={input.description}
+              icon={input.icon}
+            >
+              <InputElement {...input.props} />
+            </InputSection>
+          </div>
+        ))
+      }
+    </div>
   </CardSection>
 </Layout>

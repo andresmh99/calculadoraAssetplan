@@ -1,5 +1,7 @@
 ---
 import { menu } from '../components/Header.astro';
+import InputElement from '../components/InputElement.astro';
+import  InputSection  from "../components/InputSection.astro";
 import Layout from '../layouts/Layout.astro';
 ---
 
@@ -13,4 +15,7 @@ import Layout from '../layouts/Layout.astro';
             ))
         }
     </ul>
+    <InputSection title="Valor UF:" description='Este es el valor de la UF actualmente' icon="$" >
+        <InputElement type="date" />
+    </InputSection>
 </Layout>

@@ -1,0 +1,32 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  icon?: any
+}
+
+const { title, description, icon } = Astro.props;
+---
+
+<label for="price" class="block text-sm font-medium leading-6 text-gray-900"
+  >{title}</label
+>
+{
+  description ? (
+    <p class="mt-1 text-sm leading-6 text-gray-600">{description}</p>
+  ) : (
+    ""
+  )
+}
+<div class="flex items-center">
+  <div class="relative mt-2 rounded-md shadow-sm">
+    <div
+      class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+    >
+      <span class="text-gray-500 sm:text-sm">
+        {icon}
+      </span>
+    </div>
+    <slot />
+  </div>
+</div>
